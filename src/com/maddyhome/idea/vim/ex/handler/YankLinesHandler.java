@@ -39,7 +39,7 @@ public class YankLinesHandler extends CommandHandler {
 
   public boolean execute(@NotNull Editor editor, DataContext context, @NotNull ExCommand cmd) throws ExException {
     StringBuffer arg = new StringBuffer(cmd.getArgument());
-    char register = RegisterGroup.REGISTER_DEFAULT;
+    char register = RegisterGroup.getDefaultRegister();
     if (arg.length() > 0 && (arg.charAt(0) < '0' || arg.charAt(0) > '9')) {
       register = arg.charAt(0);
       arg.deleteCharAt(0);

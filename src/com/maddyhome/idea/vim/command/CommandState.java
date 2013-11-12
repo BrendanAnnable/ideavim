@@ -396,7 +396,7 @@ public class CommandState {
   private ParentNode currentNode = KeyParser.getInstance().getKeyRoot(getMappingMode());
 
   @Nullable private static Command lastChange = null;
-  private static char lastRegister = RegisterGroup.REGISTER_DEFAULT;
+  private static char lastRegister = RegisterGroup.UNNAMED_REGISTER;
 
   private static Logger logger = Logger.getInstance(CommandState.class.getName());
 }

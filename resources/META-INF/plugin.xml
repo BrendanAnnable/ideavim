@@ -3,6 +3,10 @@
   <id>IdeaVIM</id>
   <change-notes>
     <![CDATA[
+      <p>0.32:</p>
+      <ul>
+        <li>Added support for :set clipboard (cb)</li>
+      </ul>
       <p>0.31:</p>
       <ul>
         <li>Various bug fixes</li>

@@ -208,7 +208,7 @@ public class KeyHandler {
 
   private void handleEditorReset(@NotNull Editor editor, @NotNull KeyStroke key, @NotNull final DataContext context) {
     if (state != State.COMMAND && count == 0 && currentArg == Argument.Type.NONE && currentCmd.size() == 0 &&
-        CommandGroups.getInstance().getRegister().getCurrentRegister() == RegisterGroup.REGISTER_DEFAULT) {
+        CommandGroups.getInstance().getRegister().getCurrentRegister() == RegisterGroup.getDefaultRegister()) {
       if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
         CommandProcessor.getInstance().executeCommand(editor.getProject(), new Runnable() {
           @Override
