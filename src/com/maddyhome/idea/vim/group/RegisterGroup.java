@@ -26,6 +26,9 @@ import com.maddyhome.idea.vim.common.Register;
 import com.maddyhome.idea.vim.common.TextRange;
 import com.maddyhome.idea.vim.helper.EditorHelper;
 import com.maddyhome.idea.vim.helper.StringHelper;
+import com.maddyhome.idea.vim.option.ListOption;
+import com.maddyhome.idea.vim.option.OptionChangeEvent;
+import com.maddyhome.idea.vim.option.OptionChangeListener;
 import com.maddyhome.idea.vim.option.Options;
 import com.maddyhome.idea.vim.ui.ClipboardHandler;
 import org.jdom.Element;
@@ -46,8 +49,9 @@ public class RegisterGroup extends AbstractActionGroup {
   /**
    * The register key for the default register
    */
-  public static final char UNNAMED_REGISTER = '"';
-  public static final char CLIPBOARD_REGISTER = '+';
+
+  public static final char REGISTER_UNNAMED = '"';
+  public static final char REGISTER_CLIPBOARD = '+';
 
   private static final String WRITABLE_REGISTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-*+_/\"";
   private static final String READONLY_REGISTERS = ":.%#=/";
@@ -57,11 +61,32 @@ public class RegisterGroup extends AbstractActionGroup {
 
   private static final Logger logger = Logger.getInstance(RegisterGroup.class.getName());
 
-  private char lastRegister = UNNAMED_REGISTER;
+  private static char defaultRegister = REGISTER_UNNAMED;
+
+  private char lastRegister = defaultRegister;
   @NotNull private HashMap<Character, Register> registers = new HashMap<Character, Register>();
   private char recordRegister = 0;
   @Nullable private List<KeyStroke> recordList = null;
   public RegisterGroup() {}
+
+  static {
+    ListOption lo = (ListOption) Options.getInstance().getOption("clipboard");
+    lo.addOptionChangeListener(new OptionChangeListener() {
+      @Override
+      public void valueChange(OptionChangeEvent event) {
+        ListOption lo = (ListOption) event.getOption();
+        for (String value : lo.values()) {
+          if (value.equals("unnamed") || value.equals("unnamedplus")) {
+            defaultRegister = REGISTER_CLIPBOARD;
+          }
+          else if (value.equals("autoselect")) {
+            defaultRegister = REGISTER_UNNAMED;
+          }
+          // TODO: proper support for autoselect, autoselectml, html and exclude
+        }
+      }
+    });
+  }
 
   /**
    * Check to see if the last selected register can be written to.
@@ -89,7 +114,7 @@ public class RegisterGroup extends AbstractActionGroup {
   }
 
   public static char getDefaultRegister() {
-    return (!Options.getInstance().isSet("clipboard") ? UNNAMED_REGISTER : CLIPBOARD_REGISTER);
+    return defaultRegister;
   }
 
   /**
