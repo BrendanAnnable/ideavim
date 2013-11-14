@@ -74,15 +74,13 @@ public class RegisterGroup extends AbstractActionGroup {
     lo.addOptionChangeListener(new OptionChangeListener() {
       @Override
       public void valueChange(OptionChangeEvent event) {
+        defaultRegister = REGISTER_UNNAMED;
         ListOption lo = (ListOption) event.getOption();
         for (String value : lo.values()) {
           if (value.equals("unnamed") || value.equals("unnamedplus")) {
             defaultRegister = REGISTER_CLIPBOARD;
           }
-          else if (value.equals("autoselect")) {
-            defaultRegister = REGISTER_UNNAMED;
-          }
-          // TODO: proper support for autoselect, autoselectml, html and exclude
+          // TODO: support for autoselect, autoselectml, html and exclude
         }
       }
     });
