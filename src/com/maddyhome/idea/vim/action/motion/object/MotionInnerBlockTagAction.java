@@ -26,16 +26,19 @@ import com.maddyhome.idea.vim.common.TextRange;
 import com.maddyhome.idea.vim.group.CommandGroups;
 import com.maddyhome.idea.vim.handler.motion.TextObjectActionHandler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  */
-public class MotionOuterBigWordAction extends TextObjectAction {
-  public MotionOuterBigWordAction() {
-    super(new Handler());
+public class MotionInnerBlockTagAction extends TextObjectAction {
+  public MotionInnerBlockTagAction() {
+    super(new MotionInnerBlockTagAction.Handler());
   }
 
   private static class Handler extends TextObjectActionHandler {
     public TextRange getRange(@NotNull Editor editor, DataContext context, int count, int rawCount, Argument argument) {
-      return CommandGroups.getInstance().getMotion().getWordRange(editor, count, true, true); }
+      return CommandGroups.getInstance().getMotion().getWordRange(editor, count, false, true);
+    }
   }
 }
+

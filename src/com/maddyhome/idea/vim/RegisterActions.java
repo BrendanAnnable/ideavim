@@ -234,6 +234,11 @@ public class RegisterActions {
                           Command.Type.MOTION,
                           Command.FLAG_MOT_INCLUSIVE | Command.FLAG_TEXT_BLOCK,
                           new Shortcut("as"));
+    parser.registerAction(KeyParser.MAPPING_VISUAL | KeyParser.MAPPING_OP_PEND, "VimMotionInnerBlockTag",
+                          Command.Type.MOTION,
+                          Command.FLAG_MOT_CHARACTERWISE | Command.FLAG_MOT_INCLUSIVE | Command.FLAG_TEXT_BLOCK, new Shortcut[]{
+      new Shortcut("it")
+    });
     parser.registerAction(KeyParser.MAPPING_VISUAL | KeyParser.MAPPING_OP_PEND, "VimMotionInnerBlockAngle",
                           Command.Type.MOTION,
                           Command.FLAG_MOT_CHARACTERWISE | Command.FLAG_MOT_INCLUSIVE | Command.FLAG_TEXT_BLOCK, new Shortcut[]{
@@ -262,15 +267,20 @@ public class RegisterActions {
       });
     parser.registerAction(KeyParser.MAPPING_VISUAL | KeyParser.MAPPING_OP_PEND, "VimMotionInnerBlockDoubleQuote", Command.Type.MOTION,
                           Command.FLAG_MOT_CHARACTERWISE | Command.FLAG_MOT_INCLUSIVE | Command.FLAG_TEXT_BLOCK, new Shortcut[]{
-        new Shortcut("i\""),
+        new Shortcut("i\"")
       });
     parser.registerAction(KeyParser.MAPPING_VISUAL | KeyParser.MAPPING_OP_PEND, "VimMotionInnerBlockSingleQuote", Command.Type.MOTION,
                           Command.FLAG_MOT_CHARACTERWISE | Command.FLAG_MOT_INCLUSIVE | Command.FLAG_TEXT_BLOCK, new Shortcut[]{
-      new Shortcut("i'"),
+      new Shortcut("i'")
     });
     parser.registerAction(KeyParser.MAPPING_VISUAL | KeyParser.MAPPING_OP_PEND, "VimMotionInnerBlockBackQuote", Command.Type.MOTION,
                           Command.FLAG_MOT_CHARACTERWISE | Command.FLAG_MOT_INCLUSIVE | Command.FLAG_TEXT_BLOCK, new Shortcut[]{
-      new Shortcut("i`"),
+      new Shortcut("i`")
+    });
+    parser.registerAction(KeyParser.MAPPING_VISUAL | KeyParser.MAPPING_OP_PEND, "VimMotionOuterBlockTag",
+                          Command.Type.MOTION,
+                          Command.FLAG_MOT_CHARACTERWISE | Command.FLAG_MOT_INCLUSIVE | Command.FLAG_TEXT_BLOCK, new Shortcut[]{
+      new Shortcut("at")
     });
     parser.registerAction(KeyParser.MAPPING_VISUAL | KeyParser.MAPPING_OP_PEND, "VimMotionOuterBlockAngle",
                           Command.Type.MOTION,
@@ -300,15 +310,15 @@ public class RegisterActions {
       });
     parser.registerAction(KeyParser.MAPPING_VISUAL | KeyParser.MAPPING_OP_PEND, "VimMotionOuterBlockDoubleQuote", Command.Type.MOTION,
                           Command.FLAG_MOT_CHARACTERWISE | Command.FLAG_MOT_INCLUSIVE | Command.FLAG_TEXT_BLOCK, new Shortcut[]{
-        new Shortcut("a\""),
+        new Shortcut("a\"")
       });
     parser.registerAction(KeyParser.MAPPING_VISUAL | KeyParser.MAPPING_OP_PEND, "VimMotionOuterBlockSingleQuote", Command.Type.MOTION,
                           Command.FLAG_MOT_CHARACTERWISE | Command.FLAG_MOT_INCLUSIVE | Command.FLAG_TEXT_BLOCK, new Shortcut[]{
-      new Shortcut("a'"),
+      new Shortcut("a'")
     });
     parser.registerAction(KeyParser.MAPPING_VISUAL | KeyParser.MAPPING_OP_PEND, "VimMotionOuterBlockBackQuote", Command.Type.MOTION,
                           Command.FLAG_MOT_CHARACTERWISE | Command.FLAG_MOT_INCLUSIVE | Command.FLAG_TEXT_BLOCK, new Shortcut[]{
-      new Shortcut("a`"),
+      new Shortcut("a`")
     });
     parser.registerAction(KeyParser.MAPPING_NORMAL | KeyParser.MAPPING_OP_PEND, "VimResetMode", Command.Type.RESET, new Shortcut(new KeyStroke[]{
       KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SLASH, KeyEvent.CTRL_MASK),
