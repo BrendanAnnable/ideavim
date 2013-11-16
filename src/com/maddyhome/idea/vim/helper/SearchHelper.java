@@ -1726,6 +1726,16 @@ public class SearchHelper {
     return PsiHelper.findMethodEnd(editor, editor.getCaretModel().getOffset(), count);
   }
 
+  public static int findPreviousTag(@NotNull Editor editor, int count) {
+    CharSequence chars = editor.getDocument().getCharsSequence();
+    int pos = editor.getCaretModel().getOffset();
+    return 0;
+  }
+
+  public static int findNextTag(@NotNull Editor editor, int count) {
+    return 0;
+  }
+
   @Nullable
   private static String getPairChars() {
     if (pairsChars == null) {

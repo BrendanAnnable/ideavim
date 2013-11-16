@@ -52,6 +52,7 @@ public class RegisterGroup extends AbstractActionGroup {
 
   public static final char REGISTER_UNNAMED = '"';
   public static final char REGISTER_CLIPBOARD = '+';
+  private static final char REGISTER_DEFAULT = REGISTER_UNNAMED;
 
   private static final String WRITABLE_REGISTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-*+_/\"";
   private static final String READONLY_REGISTERS = ":.%#=/";
@@ -61,30 +62,13 @@ public class RegisterGroup extends AbstractActionGroup {
 
   private static final Logger logger = Logger.getInstance(RegisterGroup.class.getName());
 
-  private static char defaultRegister = REGISTER_UNNAMED;
+  private static Character defaultRegister = null;
 
   private char lastRegister = defaultRegister;
   @NotNull private HashMap<Character, Register> registers = new HashMap<Character, Register>();
   private char recordRegister = 0;
   @Nullable private List<KeyStroke> recordList = null;
   public RegisterGroup() {}
-
-  static {
-    ListOption lo = (ListOption) Options.getInstance().getOption("clipboard");
-    lo.addOptionChangeListener(new OptionChangeListener() {
-      @Override
-      public void valueChange(OptionChangeEvent event) {
-        defaultRegister = REGISTER_UNNAMED;
-        ListOption lo = (ListOption) event.getOption();
-        for (String value : lo.values()) {
-          if (value.equals("unnamed") || value.equals("unnamedplus")) {
-            defaultRegister = REGISTER_CLIPBOARD;
-          }
-          // TODO: support for autoselect, autoselectml, html and exclude
-        }
-      }
-    });
-  }
 
   /**
    * Check to see if the last selected register can be written to.
@@ -112,7 +96,27 @@ public class RegisterGroup extends AbstractActionGroup {
   }
 
   public static char getDefaultRegister() {
+    if (defaultRegister == null) {
+      ListOption lo = (ListOption) Options.getInstance().getOption("clipboard");
+      parseClipboardOptions(lo);
+      lo.addOptionChangeListener(new OptionChangeListener() {
+        @Override
+        public void valueChange(OptionChangeEvent event) {
+          parseClipboardOptions((ListOption)event.getOption());
+        }
+      });
+    }
     return defaultRegister;
+  }
+
+  private static void parseClipboardOptions(ListOption lo) {
+    defaultRegister = REGISTER_DEFAULT;
+    for (String value : lo.values()) {
+      if (value.equals("unnamed") || value.equals("unnamedplus")) {
+        defaultRegister = REGISTER_CLIPBOARD;
+      }
+      // TODO: support for autoselect, autoselectml, html and exclude
+    }
   }
 
   /**
